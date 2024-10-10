@@ -6,4 +6,4 @@ $sql = "INSERT INTO `categories`(`name`) VALUES (:name)";
 $stmt = $pdo->prepare($sql);
 $stmt->execute(["name" => $_POST["name"]]);
 
-header('Location: /products/');
+header('Location: /products/categories.php');

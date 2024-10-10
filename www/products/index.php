@@ -1,7 +1,8 @@
 <?php
 /** @var PDO $pdo */
 $pdo = require_once $_SERVER['DOCUMENT_ROOT'] . '/connect.php';
-$products = $pdo->query("SELECT products.id, products.name, products.description, categories.name AS category, products.popular, products.slug
+
+$products = $pdo->query("SELECT products.*, categories.name AS category
 FROM products JOIN categories
 ON products.category_id = categories.id");
 ?>
@@ -29,7 +30,7 @@ ON products.category_id = categories.id");
 <h1>Продукты</h1>
 
 <a href="/products/create.php">Добавить товар</a>
-<a href="/products/add_category.php">Добавить категорию</a>
+<a href="/products/categories.php">Категории</a>
 
 <table>
     <thead>
@@ -40,6 +41,7 @@ ON products.category_id = categories.id");
         <th>Категория</th>
         <th>Популярный</th>
         <th>Slug</th>
+        <th>Дата создания</th>
     </tr>
     </thead>
 
@@ -52,6 +54,7 @@ ON products.category_id = categories.id");
             <td><?= $product['category'] ?></td>
             <td><?= $product['popular'] ? 'Да' : 'Нет' ?></td>
             <td><?= $product['slug'] ?></td>
+            <td><?= $product['date'] ?></td>
             <td><a href="/products/edit.php?id=<?= $product['id'] ?>">Изменить</a></td>
             <td><a href="/products/actions/delete.php?id=<?= $product['id'] ?>">Удалить</a></td>
         </tr>

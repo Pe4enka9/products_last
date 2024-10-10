@@ -5,7 +5,8 @@ require $_SERVER['DOCUMENT_ROOT'] . '/products/queries/category.php';
 
 $products = $pdo->query("SELECT products.*, categories.name AS category
 FROM `products` JOIN `categories`
-ON products.category_id = categories.id");
+ON products.category_id = categories.id
+ORDER BY `products`.`date` DESC;");
 
 $categories = getCategories();
 
@@ -19,8 +20,9 @@ $currentCategories = $_GET['categories'] ?? array('all');
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Главная</title>
+    <title>Каталог</title>
 </head>
+<body>
 
 <style>
     table, tr, th, td {
@@ -30,10 +32,7 @@ $currentCategories = $_GET['categories'] ?? array('all');
     }
 </style>
 
-<body>
-
-<a href="/products.php?categories[]=<?= $currentCategories[0] ?>">Каталог</a>
-<h1>Популярные товары</h1>
+<h1>Каталог</h1>
 
 <form method="get">
     <select name="categories[]">
@@ -52,23 +51,36 @@ $currentCategories = $_GET['categories'] ?? array('all');
     <input type="submit" value="Искать">
 </form>
 
+<form method="get">
+    <?php foreach ($categories as $category): ?>
+        <input type="checkbox" name="categories[]" id="<?= $category['name'] ?>>"
+               value="<?= $category['id'] ?>" <?= in_array($category['id'], $currentCategories) ? 'checked' : '' ?>>
+        <label for="<?= $category['name'] ?>>"><?= $category['name'] ?></label>
+    <?php endforeach; ?>
+
+    <input type="submit" value="Искать">
+</form>
+
 <table>
     <thead>
     <tr>
         <th>Название</th>
         <th>Описание</th>
         <th>Категория</th>
+        <th>Просмотры</th>
     </tr>
     </thead>
 
     <tbody>
     <?php foreach ($products as $product): ?>
         <?php foreach ($currentCategories as $currentCategory): ?>
-            <?php if ($product['popular'] && ($currentCategory == $product['category_id'] || $currentCategory === 'all')): ?>
+            <?php if ($currentCategory == $product['category_id'] || $currentCategory === 'all'): ?>
                 <tr>
                     <td><?= $product['name'] ?></td>
                     <td><?= $product['description'] ?></td>
                     <td><?= $product['category'] ?></td>
+                    <td><?= $product['views'] ?></td>
+                    <td><a href="/product.php?slug=<?= $product['slug'] ?>">Перейти</a></td>
                 </tr>
             <?php endif; ?>
         <?php endforeach; ?>

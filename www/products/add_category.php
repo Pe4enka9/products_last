@@ -12,10 +12,7 @@
 <h1>Добавить категорию</h1>
 
 <form action="/products/actions/create_category.php" method="post">
-    <div>
-        <input type="text" name="name" placeholder="Название">
-    </div>
-
+    <input type="text" name="name" placeholder="Название">
     <input type="submit" value="Добавить">
 </form>
 
