@@ -69,6 +69,7 @@ $currentCategories = $_GET['categories'] ?? array('all');
                     <td><?= $product['name'] ?></td>
                     <td><?= $product['description'] ?></td>
                     <td><?= $product['category'] ?></td>
+                    <td><a href="/product.php?slug=<?= $product['slug'] ?>">Перейти</a></td>
                 </tr>
             <?php endif; ?>
         <?php endforeach; ?>
