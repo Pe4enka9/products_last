@@ -3,13 +3,28 @@
 $pdo = require_once $_SERVER['DOCUMENT_ROOT'] . '/connect.php';
 require $_SERVER['DOCUMENT_ROOT'] . '/products/queries/category.php';
 
-$products = $pdo->query("SELECT products.*, categories.name AS category
+$currentCategories = $_GET['categories'] ?? ['all'];
+
+if (in_array('all', $currentCategories)) {
+    $stmt = $pdo->query("SELECT products.*, categories.name AS category
 FROM `products` JOIN `categories`
-ON products.category_id = categories.id");
+    ON products.category_id = categories.id
+WHERE products.popular IS TRUE
+ORDER BY `products`.`date` DESC");
+} else {
+    $sql = "SELECT products.*, categories.name AS category
+FROM `products` JOIN `categories`
+    ON products.category_id = categories.id
+WHERE products.category_id = :currentCategories AND products.popular IS TRUE
+ORDER BY `products`.`date` DESC";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+        'currentCategories' => $currentCategories[0],
+    ]);
+}
+$products = $stmt->fetchAll();
 
 $categories = getCategories();
-
-$currentCategories = $_GET['categories'] ?? array('all');
 ?>
 
 <!doctype html>
@@ -29,47 +44,39 @@ $currentCategories = $_GET['categories'] ?? array('all');
     <a class="catalog" href="/products.php?categories[]=<?= $currentCategories[0] ?>">Каталог</a>
     <h1>Популярные товары</h1>
 
-    <form method="get">
+    <form class="filter" method="get">
         <select name="categories[]">
             <option value="all" selected>Все</option>
             <?php foreach ($categories as $category): ?>
-                <?php foreach ($currentCategories as $currentCategory): ?>
-                    <?php if ($currentCategory == $category['id']): ?>
-                        <option value="<?= $currentCategory ?>" selected><?= $category['name'] ?></option>
-                    <?php else: ?>
-                        <option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>
-                    <?php endif; ?>
-                <?php endforeach; ?>
+                <?php if ($currentCategories[0] == $category['id']): ?>
+                    <option value="<?= $currentCategories[0] ?>" selected><?= $category['name'] ?></option>
+                <?php else: ?>
+                    <option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>
+                <?php endif; ?>
             <?php endforeach; ?>
         </select>
 
         <input type="submit" value="Искать">
     </form>
 
-    <table>
-        <thead>
-        <tr>
-            <th>Название</th>
-            <th>Описание</th>
-            <th>Категория</th>
-        </tr>
-        </thead>
+    <div class="grid-container">
+        <?php if ($stmt->rowCount() < 1): ?>
+            <div>К сожалению, таких товаров нет :(</div>
+        <?php else: ?>
+            <?php foreach ($products as $product): ?>
+                <div class="card">
+                    <div class="card-info">
+                        <h2><?= $product['name'] ?></h2>
+                        <p><?= $product['description'] ?></p>
+                        <div>Категория: <?= $product['category'] ?></div>
+                        <div>Просмотры: <?= $product['views'] ?></div>
+                    </div>
 
-        <tbody>
-        <?php foreach ($products as $product): ?>
-            <?php foreach ($currentCategories as $currentCategory): ?>
-                <?php if ($product['popular'] && ($currentCategory == $product['category_id'] || $currentCategory === 'all')): ?>
-                    <tr>
-                        <td><?= $product['name'] ?></td>
-                        <td><?= $product['description'] ?></td>
-                        <td><?= $product['category'] ?></td>
-                        <td><a href="/product.php?slug=<?= $product['slug'] ?>">Перейти</a></td>
-                    </tr>
-                <?php endif; ?>
+                    <a href="/product.php?slug=<?= $product['slug'] ?>">Перейти</a>
+                </div>
             <?php endforeach; ?>
-        <?php endforeach; ?>
-        </tbody>
-    </table>
+        <?php endif; ?>
+    </div>
 </div>
 
 </body>

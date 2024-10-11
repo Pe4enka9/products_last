@@ -1,14 +1,15 @@
 <?php
 
-$host = "database";
+$host = "MySQL-8.2";
 $dbname = "docker";
 $username = "root";
-$password = "tiger";
+$password = "";
 
 $database = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
 
-try {
-    return $pdo = new PDO($database, $username, $password);
-} catch (PDOException $e) {
-    die("Error" . $e->getMessage());
-}
+$options = [
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+];
+
+return $pdo = new PDO($database, $username, $password, $options);

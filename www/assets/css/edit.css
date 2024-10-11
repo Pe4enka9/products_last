@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    font-family: "Jost", sans-serif;
+    font-size: 20px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.container {
+    width: 90%;
+    margin: 20px auto;
+}
+
+.container > a {
+    color: #551a8b;
+
+    position: relative;
+}
+
+.container > a::after {
+    width: 0;
+    height: 1px;
+
+    display: block;
+
+    background-color: #551a8b;
+
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+
+    transform: translateX(-50%);
+    transition: width .5s ease-in-out;
+}
+
+.container > a:hover::after {
+    width: 100%;
+}
+
+.edit-form {
+    margin-top: 15px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.edit-form fieldset, input[type="submit"] {
+    width: 20%;
+
+    padding: 5px 0 8px 10px;
+
+    border: 2px solid #ccc;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+
+    overflow: hidden;
+    resize: none;
+}
+
+.edit-form input[type="text"], textarea, select {
+    width: 100%;
+
+    padding-left: 15px;
+
+    background-color: transparent;
+
+    border: none;
+    outline: none;
+
+    resize: none;
+}
+
+.edit-form select {
+    background-image: url('https://img.icons8.com/ios-filled/50/sort-down.png');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.edit-form input[type="submit"] {
+    background-color: #88b3df;
+
+    border: none;
+    
+    transition: background-color .2s ease-in-out;
+
+    cursor: pointer;
+}
+
+.edit-form input[type="submit"]:hover {
+    background-color: #2c91bc;
+
+    cursor: pointer;
+}

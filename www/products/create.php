@@ -13,41 +13,48 @@ $categories = getCategories();
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/assets/css/edit.css">
     <title>Добавить товар</title>
 </head>
 <body>
 
-<h1>Добавить товар</h1>
+<div class="container">
+    <a href="/products/">Назад</a>
 
-<form action="/products/actions/store.php" method="post">
-    <div>
-        <input type="text" name="name" placeholder="Название">
-    </div>
+    <form class="edit-form" action="/products/actions/store.php" method="post">
+        <fieldset>
+            <legend>Название</legend>
+            <input type="text" name="name" placeholder="Название">
+        </fieldset>
 
-    <div>
-        <textarea name="description" placeholder="Описание"></textarea>
-    </div>
+        <fieldset>
+            <legend>Описание</legend>
+            <textarea name="description" placeholder="Описание"></textarea>
+        </fieldset>
 
-    <div>
-        <select name="category">
-            <option selected hidden>Категория</option>
-            <?php foreach ($categories as $category): ?>
-                <option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>
-            <?php endforeach; ?>
-        </select>
-    </div>
+        <fieldset>
+            <legend>Категория</legend>
+            <select name="category">
+                <option selected hidden>Категория</option>
+                <?php foreach ($categories as $category): ?>
+                    <option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>
+                <?php endforeach; ?>
+            </select>
+        </fieldset>
 
-    <div>
-        <input type="text" name="slug" placeholder="Slug">
-    </div>
+        <fieldset>
+            <legend>Slug</legend>
+            <input type="text" name="slug" placeholder="Slug">
+        </fieldset>
 
-    <div>
-        <input type="checkbox" name="popular" id="popular">
-        <label for="popular">Популярный</label>
-    </div>
+        <div>
+            <input type="checkbox" name="popular" id="popular">
+            <label for="popular">Популярный</label>
+        </div>
 
-    <input type="submit" value="Добавить">
-</form>
+        <input type="submit" value="Добавить">
+    </form>
+</div>
 
 </body>
 </html>

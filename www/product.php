@@ -21,20 +21,25 @@ $pdo->query("UPDATE `products` SET views = '$views' WHERE slug = '$slug'");
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/assets/css/product.css">
     <title><?= $product['name'] ?></title>
 </head>
 <body>
 
-<h1><?= $product['name'] ?></h1>
+<div class="container">
+    <a href="/products.php">Назад</a>
 
-<h2>Описание</h2>
-<p><?= $product['description'] ?></p>
+    <h1><?= $product['name'] ?></h1>
 
-<div>Категория: <?= $product['category'] ?></div>
+    <p><?= $product['description'] ?></p>
 
-<a href="/products.php?categories[]=<?= $product['category_id'] ?>">Все товары этой категории</a>
+    <div>
+        Категория: <?= $product['category'] ?>
+        <a href="/products.php?categories[]=<?= $product['category_id'] ?>">Все товары этой категории</a>
+    </div>
 
-<div>Количество просмотров: <?= $product['views'] ?></div>
+    <div>Количество просмотров: <?= $product['views'] ?></div>
+</div>
 
 </body>
 </html>
