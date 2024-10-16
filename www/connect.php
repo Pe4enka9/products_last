@@ -1,9 +1,9 @@
 <?php
 
-$host = "database";
+$host = "MySQL-8.2";
 $dbname = "docker";
 $username = "root";
-$password = "tiger";
+$password = "";
 
 $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
 

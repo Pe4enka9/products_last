@@ -4,14 +4,24 @@ $pdo = require_once $_SERVER['DOCUMENT_ROOT'] . '/connect.php';
 
 $slug = $_GET['slug'] ?? '';
 
-$product = $pdo->query("SELECT products.*, categories.name AS category
+$sql = "SELECT products.*, categories.name AS category
 FROM `products` JOIN `categories`
 ON `products`.`category_id` = `categories`.`id`
-WHERE slug = '$slug'")->fetch();
+WHERE slug = :slug";
+$stmt = $pdo->prepare($sql);
+$stmt->execute([
+    'slug' => $slug
+]);
+$product = $stmt->fetch();
 
 $views = $product['views'] + 1;
 
-$pdo->query("UPDATE `products` SET views = '$views' WHERE slug = '$slug'");
+$sql = "UPDATE `products` SET views = :views WHERE slug = :slug";
+$stmt = $pdo->prepare($sql);
+$stmt->execute([
+    'views' => $views,
+    'slug' => $slug
+]);
 ?>
 
 <!doctype html>

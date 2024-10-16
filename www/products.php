@@ -75,25 +75,23 @@ $categories = getCategories();
         <?php else: ?>
             <?php foreach ($products as $product): ?>
                 <div class="card">
-                    <div class="info-wrapper">
-                        <div class="image-container">
-                            <?php if (is_null($product['image'])): ?>
-                                <img src="/assets/images/no_photo.png" alt="Нет фото">
-                            <?php else: ?>
-                                <img src="<?= $product['image'] ?>" alt="<?= $product['image'] ?>">
-                            <?php endif; ?>
-                        </div>
+                    <div class="image-container">
+                        <?php if (is_null($product['image'])): ?>
+                            <img src="/assets/images/no_photo.png" alt="Нет фото">
+                        <?php else: ?>
+                            <img src="<?= $product['image'] ?>" alt="<?= $product['image'] ?>">
+                        <?php endif; ?>
+                    </div>
 
-                        <div class="card-info">
-                            <h2><?= $product['name'] ?></h2>
-                            <p><?= $product['description'] ?></p>
-                            <div>Категория: <?= $product['category'] ?></div>
-                            <div>Просмотры: <?= $product['views'] ?></div>
-                        </div>
+                    <div class="card-info">
+                        <h2><?= $product['name'] ?></h2>
+                        <p><?= $product['description'] ?></p>
+                        <div>Категория: <?= $product['category'] ?></div>
+                        <div>Просмотры: <?= $product['views'] ?></div>
                     </div>
 
                     <div class="price">
-                        <div>Price</div>
+                        <div><?= $product['price'] ?> рублей</div>
                         <a href="/product.php?slug=<?= $product['slug'] ?>">Перейти</a>
                     </div>
                 </div>
