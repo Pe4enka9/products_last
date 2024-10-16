@@ -75,14 +75,27 @@ $categories = getCategories();
         <?php else: ?>
             <?php foreach ($products as $product): ?>
                 <div class="card">
-                    <div class="card-info">
-                        <h2><?= $product['name'] ?></h2>
-                        <p><?= $product['description'] ?></p>
-                        <div>Категория: <?= $product['category'] ?></div>
-                        <div>Просмотры: <?= $product['views'] ?></div>
+                    <div class="info-wrapper">
+                        <div class="image-container">
+                            <?php if (is_null($product['image'])): ?>
+                                <img src="/assets/images/no_photo.png" alt="Нет фото">
+                            <?php else: ?>
+                                <img src="<?= $product['image'] ?>" alt="<?= $product['image'] ?>">
+                            <?php endif; ?>
+                        </div>
+
+                        <div class="card-info">
+                            <h2><?= $product['name'] ?></h2>
+                            <p><?= $product['description'] ?></p>
+                            <div>Категория: <?= $product['category'] ?></div>
+                            <div>Просмотры: <?= $product['views'] ?></div>
+                        </div>
                     </div>
 
-                    <a href="/product.php?slug=<?= $product['slug'] ?>">Перейти</a>
+                    <div class="price">
+                        <div>Price</div>
+                        <a href="/product.php?slug=<?= $product['slug'] ?>">Перейти</a>
+                    </div>
                 </div>
             <?php endforeach; ?>
         <?php endif; ?>

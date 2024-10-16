@@ -5,7 +5,7 @@ $pdo = require_once $_SERVER['DOCUMENT_ROOT'] . '/connect.php';
 $sql = "SELECT * FROM `categories` WHERE id = :id";
 $stmt = $pdo->prepare($sql);
 $stmt->execute(['id' => $_GET['id']]);
-$category = $stmt->fetch(PDO::FETCH_ASSOC);
+$category = $stmt->fetch();
 ?>
 
 <!doctype html>

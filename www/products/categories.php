@@ -17,14 +17,6 @@ $categories = getCategories();
     <title>Категории</title>
 </head>
 
-<style>
-    table, tr, th, td {
-        padding: 5px;
-        border: 1px solid #000;
-        border-collapse: collapse;
-    }
-</style>
-
 <body>
 <div class="container">
     <h1>Категории</h1>

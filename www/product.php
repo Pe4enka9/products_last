@@ -7,7 +7,7 @@ $slug = $_GET['slug'] ?? '';
 $product = $pdo->query("SELECT products.*, categories.name AS category
 FROM `products` JOIN `categories`
 ON `products`.`category_id` = `categories`.`id`
-WHERE slug = '$slug'")->fetch(PDO::FETCH_ASSOC);
+WHERE slug = '$slug'")->fetch();
 
 $views = $product['views'] + 1;
 
@@ -30,6 +30,12 @@ $pdo->query("UPDATE `products` SET views = '$views' WHERE slug = '$slug'");
     <a href="/products.php">Назад</a>
 
     <h1><?= $product['name'] ?></h1>
+
+    <?php if (is_null($product['image'])): ?>
+        <img src="/assets/images/no_photo.png" alt="Нет фото">
+    <?php else: ?>
+        <img src="<?= $product['image'] ?>" alt="<?= $product['image'] ?>">
+    <?php endif; ?>
 
     <p><?= $product['description'] ?></p>
 

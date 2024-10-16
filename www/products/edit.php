@@ -6,12 +6,12 @@ require $_SERVER['DOCUMENT_ROOT'] . '/products/queries/category.php';
 $sqlProduct = "SELECT * FROM `products` WHERE id = :id";
 $stmtProduct = $pdo->prepare($sqlProduct);
 $stmtProduct->execute(['id' => $_GET['id']]);
-$product = $stmtProduct->fetch(PDO::FETCH_ASSOC);
+$product = $stmtProduct->fetch();
 
 $sqlCategory = "SELECT * FROM `categories` WHERE id = :categoryID";
 $stmtCategory = $pdo->prepare($sqlCategory);
 $stmtCategory->execute(['categoryID' => $product['category_id']]);
-$currentCategory = $stmtCategory->fetch(PDO::FETCH_ASSOC);
+$currentCategory = $stmtCategory->fetch();
 
 $categories = getCategories();
 ?>
